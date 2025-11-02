@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB using Mongoose
@@ -17,8 +19,8 @@ app.get('/', (req, res) => {
     res.send("Backend running with Mongoose!");
 });
 
+const actionsRouter = require('./routes/actions');
+app.use('/api/actions', actionsRouter);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
-const actonsRouter = require('./routes/actions');
-app.use('/api/actions', actonsRouter);
